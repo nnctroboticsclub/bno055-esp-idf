@@ -177,7 +177,7 @@ void BNO055::uart_readLen(bno055_reg_t reg, uint8_t *buffer, uint8_t len,
         if (data == NULL) throw std::bad_alloc();  // malloc failed
       }
       rxBytes = uart_read_bytes(_uartPort, data, (len + 2),
-                                timeoutMS / portTICK_RATE_MS);
+                                timeoutMS / portTICK_PERIOD_MS);
       if (rxBytes > 0) {
 #ifndef BNO055_DEBUG_OFF
         ESP_LOGD(BNO055_LOG_TAG, "(RL) Read %d bytes", rxBytes);
@@ -241,7 +241,7 @@ void BNO055::uart_writeLen(bno055_reg_t reg, uint8_t *data2write, uint8_t len,
 
     if (timeoutMS > 0) {  // check response (if expected)
       rxBytes =
-          uart_read_bytes(_uartPort, data, 2, timeoutMS / portTICK_RATE_MS);
+          uart_read_bytes(_uartPort, data, 2, timeoutMS / portTICK_PERIOD_MS);
       if (rxBytes > 0) {
 #ifndef BNO055_DEBUG_OFF
         ESP_LOGD(BNO055_LOG_TAG, "(WL) Read %d bytes", rxBytes);  // DEBUG
