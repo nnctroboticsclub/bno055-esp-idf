@@ -450,7 +450,6 @@ void BNO055::reset() {
 #ifndef BNO055_DEBUG_OFF
     ESP_LOGD(BNO055_LOG_TAG, "RST -> using hardware pin");  // DEBUG
 #endif
-    gpio_pad_select_gpio(_rstPin);
     gpio_set_direction(_rstPin, GPIO_MODE_OUTPUT);
     gpio_set_level(_rstPin, 0);  // turn OFF
     vTaskDelay(1 / portTICK_PERIOD_MS);
@@ -906,7 +905,6 @@ void BNO055::begin() {
   }
 
   if (_intPin != GPIO_NUM_MAX) {
-    gpio_pad_select_gpio(_intPin);
     gpio_set_direction(_intPin, GPIO_MODE_INPUT);
     gpio_set_intr_type(_intPin, GPIO_INTR_POSEDGE);
     gpio_set_pull_mode(_intPin, GPIO_PULLDOWN_ONLY);
